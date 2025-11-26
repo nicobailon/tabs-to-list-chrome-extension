@@ -99,8 +99,6 @@ export async function initiateOAuth() {
   const codeVerifier = generateCodeVerifier();
   const codeChallenge = await generateCodeChallenge(codeVerifier);
 
-  await chrome.storage.session.set({ oauth_verifier: codeVerifier });
-
   const authUrl = new URL(ANTHROPIC_AUTH_URL);
   authUrl.searchParams.set('response_type', 'code');
   authUrl.searchParams.set('redirect_uri', redirectUrl);

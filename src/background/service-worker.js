@@ -31,7 +31,7 @@ async function handleMessage(request) {
       return { success: true };
 
     case 'exportTabs':
-      return await exportTabs(request.onProgress);
+      return await exportTabs();
 
     case 'getTabCount':
       const tabs = await chrome.tabs.query({ currentWindow: true });

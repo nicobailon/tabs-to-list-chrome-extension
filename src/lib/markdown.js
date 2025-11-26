@@ -56,12 +56,22 @@ export function generateFallbackMarkdown(tabsData) {
   for (const [domain, tabs] of Object.entries(tabsByDomain)) {
     markdown += `### ${domain}\n\n`;
     for (const tab of tabs) {
-      markdown += `- [${tab.title || 'Untitled'}](${tab.url})\n`;
+      const safeTitle = escapeMarkdownLinkText(tab.title || 'Untitled');
+      const safeUrl = escapeMarkdownUrl(tab.url);
+      markdown += `- [${safeTitle}](${safeUrl})\n`;
     }
     markdown += '\n';
   }
 
   return markdown;
+}
+
+function escapeMarkdownLinkText(text) {
+  return text.replace(/\[/g, '\\[').replace(/\]/g, '\\]');
+}
+
+function escapeMarkdownUrl(url) {
+  return url.replace(/\)/g, '%29').replace(/\s/g, '%20');
 }
 
 function groupTabsByDomain(tabsData) {

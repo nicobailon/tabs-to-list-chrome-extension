@@ -38,7 +38,7 @@ async function processSingleBatch(tabsData, authToken) {
   }
 
   const data = await response.json();
-  return data.content[0].text;
+  return data.content?.[0]?.text || '';
 }
 
 async function processInBatches(tabsData, authToken) {
@@ -78,7 +78,7 @@ async function processInBatches(tabsData, authToken) {
     }
 
     const data = await response.json();
-    batchResults.push(data.content[0].text);
+    batchResults.push(data.content?.[0]?.text || '');
   }
 
   const mergePrompt = buildMergePrompt(batchResults);
@@ -104,7 +104,7 @@ async function processInBatches(tabsData, authToken) {
   }
 
   const mergeData = await mergeResponse.json();
-  return mergeData.content[0].text;
+  return mergeData.content?.[0]?.text || batchResults.join('\n\n---\n\n');
 }
 
 function buildOrganizationPrompt(tabsData) {
