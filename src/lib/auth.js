@@ -18,7 +18,7 @@ export async function getAuthToken() {
     }
     const refreshed = await refreshOAuthToken(auth.refresh);
     if (refreshed) {
-      return refreshed.access;
+      return refreshed.access_token;
     }
     return null;
   }
